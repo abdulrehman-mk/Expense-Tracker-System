@@ -1,0 +1,32 @@
+﻿<canvas id="expenseChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const labels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.Labels));
+    const data = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.Totals));
+
+    new Chart(document.getElementById('expenseChart'), {
+        type: 'pie',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Expenses',
+                data,
+                backgroundColor: labels.map((_, i) => `hsl(${i*60 % 360},70%,60%)`),
+                borderColor: labels.map((_, i) => `hsl(${i*60 % 360},70%,40%)`),
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'top' }, title: { display: true, text: 'Expenses by Category' } }
+        }
+    });
+</script>
+
+<style>
+    #expenseChart {
+        max-width: 400px;
+        margin: auto;
+    }
+</style>

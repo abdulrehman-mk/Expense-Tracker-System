@@ -1,0 +1,94 @@
+﻿@model IEnumerable<technova_ecommerce.Models.Entities.Expense>
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+<p>
+    <a class="btn btn-primary"  asp-action="Create">Add Expense</a>
+</p>
+
+<div class="card mb-3">
+    <div class="card-body text-center">
+        <h5>Total Expenses</h5>
+        <h3 class="text-danger">Rs @ViewBag.TotalExpenses</h3>
+    </div>
+</div>
+
+<form method="get" class="row g-2 mb-3 align-items-end">
+    <div class="col-md-4">
+        <label class="form-label">Select Month</label>
+        <input type="month"
+               name="selectedMonth"
+               class="form-control"
+               value="@ViewBag.SelectedMonth" />
+    </div>
+
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-success w-100">
+            Filter
+        </button>
+    </div>
+
+    <div class="col-md-2">
+        <a asp-action="Index" class="btn btn-secondary w-100">
+            Reset
+        </a>
+    </div>
+</form>
+
+<table class="table">
+   
+
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpenseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.CategoryName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td >
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpenseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryId)
+            </td>
+               
+                <td>
+                    <span class="badge rounded-pill bg-primary"> @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                 </span> </td>
+          
+              
+            <td>
+                    <div class="btn-group" role="group">
+                        <a type="button" class="btn btn-secondary"  asp-action="Edit" asp-route-id="@item.ExpenseId" fdprocessedid="rgb5cvq">Edit</a>
+                        <a type="button" class="btn btn-secondary" asp-action="Details" asp-route-id="@item.ExpenseId" fdprocessedid="63tl5n">Details</a>
+                        <a type="button" class="btn btn-secondary" asp-action="Delete" asp-route-id="@item.ExpenseId" fdprocessedid="mtxq8">Delete</a>
+                    </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
